@@ -1,0 +1,11 @@
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\bin\Debug\net8.0\PensionVault.Domain.deps.json
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\bin\Debug\net8.0\PensionVault.Domain.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\bin\Debug\net8.0\PensionVault.Domain.pdb
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.AssemblyInfoInputs.cache
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.AssemblyInfo.cs
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.csproj.CoreCompileInputs.cache
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\refint\PensionVault.Domain.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.pdb
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\ref\PensionVault.Domain.dll
