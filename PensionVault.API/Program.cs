@@ -18,8 +18,16 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 // ── Database (PostgreSQL for Render) ──────────────────────────────────────────────────
+var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (connString != null && connString.StartsWith("postgres"))
+{
+    var uri = new Uri(connString);
+    var userInfo = uri.UserInfo.Split(':');
+    connString = $"Host={uri.Host};Port={(uri.IsDefaultPort ? 5432 : uri.Port)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};Ssl Mode=Require;Trust Server Certificate=true;";
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    options.UseNpgsql(connString,
         sql => sql.MigrationsAssembly("PensionVault.Infrastructure")));
 
 // Register IAppDbContext → AppDbContext
