@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PensionVault.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,14 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "Employers",
                 columns: table => new
                 {
-                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    RegistrationNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Industry = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    EnrolledMemberCount = table.Column<int>(type: "int", nullable: false),
-                    RemittanceFrequency = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ContactDetails = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    EmployerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CompanyName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    RegistrationNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Industry = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    EnrolledMemberCount = table.Column<int>(type: "integer", nullable: false),
+                    RemittanceFrequency = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ContactDetails = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,14 +33,14 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "FundSchemes",
                 columns: table => new
                 {
-                    SchemeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SchemeName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    SchemeType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    EmployeeContributionRate = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    EmployerContributionRate = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    InterestRatePA = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    VestingSchedule = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    SchemeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SchemeName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    SchemeType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    EmployeeContributionRate = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    EmployerContributionRate = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    InterestRatePA = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    VestingSchedule = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,17 +51,18 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    PasswordHash = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    OrganisationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RefreshTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Role = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    PasswordHash = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    OrganisationId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EmployeeId = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenExpiry = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,15 +73,15 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "ContributionRemittances",
                 columns: table => new
                 {
-                    RemittanceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RemittancePeriod = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    TotalEmployeeShare = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalEmployerShare = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    RemittanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CoverageCount = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    RemittanceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EmployerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RemittancePeriod = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    TotalEmployeeShare = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalEmployerShare = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    RemittanceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CoverageCount = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,15 +98,15 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "CorpusRecords",
                 columns: table => new
                 {
-                    CorpusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SchemeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalContributions = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalWithdrawals = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    InvestmentIncome = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ManagementExpenses = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ClosingCorpus = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    CorpusId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SchemeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RecordDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    TotalContributions = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalWithdrawals = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    InvestmentIncome = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ManagementExpenses = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ClosingCorpus = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,14 +123,14 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "InvestmentPortfolios",
                 columns: table => new
                 {
-                    PortfolioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SchemeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssetClass = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AllocationPercent = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    InvestedValue = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    CurrentValue = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    YieldEarned = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PortfolioId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SchemeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AssetClass = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    AllocationPercent = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    InvestedValue = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    CurrentValue = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    YieldEarned = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,12 +147,12 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "AuditLogs",
                 columns: table => new
                 {
-                    AuditId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    EntityType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    RecordId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AuditId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Action = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    EntityType = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    RecordId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,18 +169,18 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "Members",
                 columns: table => new
                 {
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MembershipNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    NationalIdRef = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfRetirement = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NomineeDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MembershipNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Gender = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    NationalIdRef = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    EmployerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    JoiningDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateOfRetirement = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    NomineeDetails = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,12 +203,12 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "Notifications",
                 columns: table => new
                 {
-                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    NotificationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Message = table.Column<string>(type: "text", nullable: false),
+                    Category = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,14 +225,14 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "AnnuityPlans",
                 columns: table => new
                 {
-                    AnnuityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PlanType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PurchaseValue = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    MonthlyPension = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    AnnuityStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NomineeDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    AnnuityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PlanType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    PurchaseValue = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    MonthlyPension = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    AnnuityStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NomineeDetails = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -248,15 +249,15 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "BenefitClaims",
                 columns: table => new
                 {
-                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    ClaimDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EligibleAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    VestedAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TaxDeductible = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ProcessedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    ClaimId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClaimType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    ClaimDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EligibleAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    VestedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TaxDeductible = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ProcessedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -279,16 +280,16 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "FundAccounts",
                 columns: table => new
                 {
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SchemeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountOpenDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EmployeeContributionBalance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    EmployerContributionBalance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    InterestAccrued = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalBalance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    VestingPercent = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SchemeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountOpenDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EmployeeContributionBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    EmployerContributionBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    InterestAccrued = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    VestingPercent = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -311,15 +312,15 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "MemberContributions",
                 columns: table => new
                 {
-                    ContributionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RemittanceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Period = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    EmployeeAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    EmployerAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    PostedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    ContributionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RemittanceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Period = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    EmployeeAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    EmployerAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    PostedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -342,16 +343,16 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "MonthlyPensionDisbursements",
                 columns: table => new
                 {
-                    DisbursementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AnnuityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Month = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    GrossAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TaxDeducted = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    NetAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DisbursedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    DisbursementId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AnnuityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Month = table.Column<int>(type: "integer", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    GrossAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TaxDeducted = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    NetAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    DisbursedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -374,15 +375,15 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "ClaimDisbursements",
                 columns: table => new
                 {
-                    DisbursementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DisbursedAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TaxDeducted = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    NetAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    BankAccountRef = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DisbursedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    DisbursementId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClaimId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DisbursedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TaxDeducted = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    NetAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BankAccountRef = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    DisbursedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -405,16 +406,16 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "InterestCreditRecords",
                 columns: table => new
                 {
-                    InterestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FinancialYear = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    OpeningBalance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TotalContributions = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    InterestRateApplied = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    InterestAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ClosingBalance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    CreditedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    InterestId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    FinancialYear = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    OpeningBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    TotalContributions = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    InterestRateApplied = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    InterestAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ClosingBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    CreditedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -431,14 +432,14 @@ namespace PensionVault.Infrastructure.Migrations
                 name: "LedgerEntries",
                 columns: table => new
                 {
-                    EntryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EntryType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    BalanceAfter = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReferenceId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    EntryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EntryType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BalanceAfter = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ReferenceId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {

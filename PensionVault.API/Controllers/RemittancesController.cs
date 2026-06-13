@@ -15,11 +15,34 @@ public class RemittancesController : ControllerBase
     public RemittancesController(IContributionService contributionService)
         => _contributionService = contributionService;
 
+    /// <summary>Get all remittances</summary>
+    [HttpGet]
+    [Authorize(Roles = "Employer,FundAdmin,Admin,Compliance")]
+    public async Task<IActionResult> GetAll()
+    {
+        if (User.IsInRole("Employer"))
+        {
+            var orgClaim = User.FindFirst("OrganisationId");
+            if (orgClaim == null || !Guid.TryParse(orgClaim.Value, out var orgId)) 
+                return Ok(new List<RemittanceResponse>());
+            return Ok(await _contributionService.GetEmployerRemittancesAsync(orgId));
+        }
+        return Ok(await _contributionService.GetAllRemittancesAsync());
+    }
+
     /// <summary>Submit a contribution remittance for an employer</summary>
     [HttpPost]
     [Authorize(Roles = "Employer,FundAdmin")]
     public async Task<IActionResult> Create([FromBody] CreateRemittanceRequest request)
     {
+        if (User.IsInRole("Employer"))
+        {
+            var orgClaim = User.FindFirst("OrganisationId");
+            if (orgClaim != null && Guid.TryParse(orgClaim.Value, out var orgId))
+            {
+                request = request with { EmployerId = orgId };
+            }
+        }
         var result = await _contributionService.CreateRemittanceAsync(request);
         return CreatedAtAction(nameof(GetById), new { id = result.RemittanceId }, result);
     }

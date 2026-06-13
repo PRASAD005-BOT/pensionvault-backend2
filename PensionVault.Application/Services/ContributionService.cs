@@ -12,6 +12,7 @@ public interface IContributionService
     Task<IEnumerable<RemittanceResponse>> GetEmployerRemittancesAsync(Guid employerId);
     Task<RemittanceResponse> ReconcileAsync(Guid remittanceId);
     Task<IEnumerable<MemberContributionResponse>> GetMemberContributionsAsync(Guid memberId);
+    Task<IEnumerable<RemittanceResponse>> GetAllRemittancesAsync();
 }
 
 public class ContributionService : IContributionService
@@ -72,6 +73,36 @@ public class ContributionService : IContributionService
                     Status = LedgerEntryStatus.Posted
                 });
             }
+
+            // Notify member of the posted contribution
+            var member = await _context.Members.FindAsync(item.MemberId);
+            if (member != null)
+            {
+                _context.Notifications.Add(new Notification
+                {
+                    UserId = member.UserId,
+                    Message = $"A contribution of ₹{item.EmployeeAmount + item.EmployerAmount:N2} has been posted to your account for period {request.RemittancePeriod}.",
+                    Category = NotificationCategory.Contribution,
+                    Status = NotificationStatus.Unread,
+                    CreatedDate = DateTime.UtcNow
+                });
+            }
+        }
+
+        // Notify employer users of the remittance submission
+        var employerUsers = await _context.Users
+            .Where(u => u.OrganisationId == request.EmployerId && u.Role == UserRole.Employer)
+            .ToListAsync();
+        foreach (var user in employerUsers)
+        {
+            _context.Notifications.Add(new Notification
+            {
+                UserId = user.UserId,
+                Message = $"Remittance of ₹{total:N2} for period {request.RemittancePeriod} has been submitted successfully.",
+                Category = NotificationCategory.Contribution,
+                Status = NotificationStatus.Unread,
+                CreatedDate = DateTime.UtcNow
+            });
         }
 
         await _context.SaveChangesAsync();
@@ -109,8 +140,34 @@ public class ContributionService : IContributionService
             ? RemittanceStatus.Reconciled
             : RemittanceStatus.Shortfall;
 
+        // Notify employer users of the reconciliation result
+        var employerUsers = await _context.Users
+            .Where(u => u.OrganisationId == remittance.EmployerId && u.Role == UserRole.Employer)
+            .ToListAsync();
+        foreach (var user in employerUsers)
+        {
+            _context.Notifications.Add(new Notification
+            {
+                UserId = user.UserId,
+                Message = $"Your remittance for period {remittance.RemittancePeriod} has been reconciled. Status: {remittance.Status}.",
+                Category = NotificationCategory.Contribution,
+                Status = NotificationStatus.Unread,
+                CreatedDate = DateTime.UtcNow
+            });
+        }
+
         await _context.SaveChangesAsync();
         return await GetRemittanceAsync(remittanceId);
+    }
+
+    public async Task<IEnumerable<RemittanceResponse>> GetAllRemittancesAsync()
+    {
+        var remittances = await _context.ContributionRemittances
+            .Include(r => r.Employer)
+            .OrderByDescending(r => r.RemittanceDate)
+            .ToListAsync();
+            
+        return remittances.Select(ToResponse);
     }
 
     public async Task<IEnumerable<MemberContributionResponse>> GetMemberContributionsAsync(Guid memberId)

@@ -8,7 +8,8 @@ public record RegisterRequest(
     string Password,
     string Role,
     string? Phone,
-    Guid? OrganisationId
+    Guid? OrganisationId,
+    string? EmployeeId
 );
 
 public record AuthResponse(
@@ -18,7 +19,8 @@ public record AuthResponse(
     string Role,
     string Token,
     string RefreshToken,
-    DateTime TokenExpiry
+    DateTime TokenExpiry,
+    string? EmployeeId
 );
 
 public record RefreshTokenRequest(string RefreshToken);

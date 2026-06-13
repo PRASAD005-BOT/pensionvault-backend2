@@ -72,6 +72,13 @@ public class InvestmentService : IInvestmentService
 
     public async Task<CorpusResponse> CreateCorpusRecordAsync(CreateCorpusRequest request)
     {
+        var lastCorpus = await _context.CorpusRecords
+            .Where(c => c.SchemeId == request.SchemeId && c.Status == CorpusStatus.Finalised)
+            .OrderByDescending(c => c.RecordDate)
+            .FirstOrDefaultAsync();
+
+        var openingCorpus = lastCorpus?.ClosingCorpus ?? 0;
+
         var corpus = new CorpusRecord
         {
             SchemeId = request.SchemeId,
@@ -80,7 +87,7 @@ public class InvestmentService : IInvestmentService
             TotalWithdrawals = request.TotalWithdrawals,
             InvestmentIncome = request.InvestmentIncome,
             ManagementExpenses = request.ManagementExpenses,
-            ClosingCorpus = request.TotalContributions - request.TotalWithdrawals
+            ClosingCorpus = openingCorpus + request.TotalContributions - request.TotalWithdrawals
                 + request.InvestmentIncome - request.ManagementExpenses,
             Status = CorpusStatus.Draft
         };
@@ -109,6 +116,8 @@ public class InvestmentService : IInvestmentService
 
     private static CorpusResponse ToCorpusResponse(CorpusRecord c) => new(
         c.CorpusId, c.SchemeId, c.Scheme?.SchemeName ?? "",
-        c.RecordDate, c.TotalContributions, c.TotalWithdrawals,
+        c.RecordDate, 
+        c.ClosingCorpus - c.TotalContributions + c.TotalWithdrawals - c.InvestmentIncome + c.ManagementExpenses,
+        c.TotalContributions, c.TotalWithdrawals,
         c.InvestmentIncome, c.ManagementExpenses, c.ClosingCorpus, c.Status);
 }

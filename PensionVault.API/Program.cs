@@ -17,9 +17,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Host.UseSerilog();
 
-// ── Database (SQL Server) ──────────────────────────────────────────────────
+// ── Database (PostgreSQL for Render) ──────────────────────────────────────────────────
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
         sql => sql.MigrationsAssembly("PensionVault.Infrastructure")));
 
 // Register IAppDbContext → AppDbContext
@@ -56,10 +56,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // ── Controllers ───────────────────────────────────────────────────────────
-builder.Services.AddControllers()
-    .AddJsonOptions(opts =>
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<PensionVault.API.Filters.AuditLogFilter>();
+})
+    .AddJsonOptions(opts => {
         opts.JsonSerializerOptions.DefaultIgnoreCondition =
-            System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull);
+            System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        opts.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 
 // ── Swagger / OpenAPI ─────────────────────────────────────────────────────
 builder.Services.AddEndpointsApiExplorer();
@@ -110,27 +115,38 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
     await DataSeeder.SeedAsync(db);
+    
+    var nullRetirementMembers = await db.Members.Where(m => m.DateOfRetirement == null).ToListAsync();
+    foreach (var m in nullRetirementMembers)
+    {
+        m.DateOfRetirement = m.DateOfBirth.AddYears(60);
+    }
+    if (nullRetirementMembers.Any()) await db.SaveChangesAsync();
 }
 
 // ── Middleware Pipeline ───────────────────────────────────────────────────
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseSerilogRequestLogging();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PensionVault API v1");
-        c.RoutePrefix = "swagger";
-        c.DocumentTitle = "PensionVault API";
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PensionVault API v1");
+    c.RoutePrefix = "swagger";
+    c.DocumentTitle = "PensionVault API";
+});
 
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return System.Threading.Tasks.Task.CompletedTask;
+});
+
 Log.Information("PensionVault API starting on {Url}", "https://localhost:7001");
 app.Run();
+

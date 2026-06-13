@@ -14,6 +14,11 @@ public class LedgerController : ControllerBase
     private readonly ILedgerService _ledgerService;
     public LedgerController(ILedgerService ledgerService) => _ledgerService = ledgerService;
 
+    [HttpGet]
+    [Authorize(Roles = "FundAdmin,Admin,Compliance")]
+    public async Task<IActionResult> GetAll()
+        => Ok(await _ledgerService.GetAllLedgerEntriesAsync());
+
     [HttpGet("account/{accountId:guid}")]
     public async Task<IActionResult> GetLedger(Guid accountId)
         => Ok(await _ledgerService.GetAccountLedgerAsync(accountId));

@@ -36,7 +36,7 @@ public class ReportsController : ControllerBase
 
     /// <summary>Get audit trail with optional filters</summary>
     [HttpGet("audit-trail")]
-    [Authorize(Roles = "Compliance,Admin")]
+    [Authorize(Roles = "Compliance,Admin,FundAdmin")]
     public async Task<IActionResult> AuditTrail(
         [FromQuery] string? entityType,
         [FromQuery] DateTime? from,
@@ -83,5 +83,55 @@ public class ReportsController : ControllerBase
             .OrderByDescending(x => x.Period)
             .ToListAsync();
         return Ok(summary);
+    }
+
+    [HttpPost("fix-data")]
+    [AllowAnonymous]
+    public async Task<IActionResult> FixData()
+    {
+        // Update all old schemes instead of deleting them
+        var schemes = await _context.FundSchemes.ToListAsync();
+        foreach (var s in schemes)
+        {
+            if (s.SchemeName.Contains("EPF") || s.SchemeType == SchemeType.EPF)
+            {
+                s.EmployeeContributionRate = 12;
+                s.EmployerContributionRate = 12;
+                s.InterestRatePA = 8.25m;
+                s.Status = SchemeStatus.Active;
+            }
+            else
+            {
+                s.EmployerContributionRate = 4.81m;
+                s.InterestRatePA = 7.5m;
+                s.Status = SchemeStatus.Active;
+            }
+        }
+        await _context.SaveChangesAsync();
+
+        var epf = schemes.FirstOrDefault(s => s.SchemeType == SchemeType.EPF) ?? schemes.FirstOrDefault();
+
+        // Fix missing FundAccount
+        var member = await _context.Members.FirstOrDefaultAsync();
+        if (member != null && epf != null && !await _context.FundAccounts.AnyAsync(a => a.MemberId == member.MemberId))
+        {
+            var account = new PensionVault.Domain.Entities.FundAccount { MemberId = member.MemberId, SchemeId = epf.SchemeId, AccountOpenDate = DateTime.UtcNow, VestingPercent = 100, Status = FundAccountStatus.Active };
+            _context.FundAccounts.Add(account);
+            await _context.SaveChangesAsync();
+
+            // Insert Dummy Ledger entries
+            _context.LedgerEntries.Add(new PensionVault.Domain.Entities.LedgerEntry { AccountId = account.AccountId, EntryType = EntryType.ContributionCredit, Amount = 24000, BalanceAfter = 24000, ReferenceId = "SYS-GEN", Status = LedgerEntryStatus.Posted });
+            _context.LedgerEntries.Add(new PensionVault.Domain.Entities.LedgerEntry { AccountId = account.AccountId, EntryType = EntryType.InterestCredit, Amount = 1980, BalanceAfter = 25980, ReferenceId = "SYS-GEN", Status = LedgerEntryStatus.Posted });
+            await _context.SaveChangesAsync();
+            
+            // Insert Dummy Annuity
+            if (!await _context.AnnuityPlans.AnyAsync(a => a.MemberId == member.MemberId))
+            {
+                _context.AnnuityPlans.Add(new PensionVault.Domain.Entities.AnnuityPlan { MemberId = member.MemberId, PlanType = AnnuityPlanType.LifeAnnuity, PurchaseValue = 500000, MonthlyPension = 3500, AnnuityStartDate = DateTime.UtcNow, Status = AnnuityStatus.Active });
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        return Ok("Fixed");
     }
 }

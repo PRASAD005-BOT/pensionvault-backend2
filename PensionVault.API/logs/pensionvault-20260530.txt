@@ -275,3 +275,106 @@ Error Number:547,State:0,Class:16
 2026-05-30 10:58:51.024 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 232.8909 ms
 2026-05-30 10:59:46.006 +05:30 [INF] HTTP POST /api/remittances responded 201 in 255.5247 ms
 2026-05-30 11:00:35.533 +05:30 [INF] HTTP GET /api/members/941642b4-245e-4be0-ba18-59d313de5bf0/ledger responded 200 in 135.2349 ms
+2026-05-30 18:38:05.374 +05:30 [INF] PensionVault API starting on https://localhost:7001
+2026-05-30 18:38:05.711 +05:30 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert.
+2026-05-30 18:38:16.873 +05:30 [INF] HTTP GET / responded 404 in 55.6598 ms
+2026-05-30 18:38:43.338 +05:30 [INF] HTTP GET / responded 404 in 2.2059 ms
+2026-05-30 18:41:52.876 +05:30 [INF] PensionVault API starting on https://localhost:7001
+2026-05-30 18:41:53.117 +05:30 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert.
+2026-05-30 18:42:17.873 +05:30 [INF] HTTP GET /swagger responded 301 in 57.0476 ms
+2026-05-30 18:42:18.028 +05:30 [INF] HTTP GET /swagger/index.html responded 200 in 88.6218 ms
+2026-05-30 18:42:18.097 +05:30 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 25.0582 ms
+2026-05-30 18:42:18.102 +05:30 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 28.9008 ms
+2026-05-30 18:42:18.128 +05:30 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 54.2248 ms
+2026-05-30 18:42:18.420 +05:30 [INF] HTTP GET /swagger/favicon-32x32.png responded 200 in 0.6262 ms
+2026-05-30 18:42:18.576 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 186.4254 ms
+2026-05-30 18:42:31.119 +05:30 [INF] HTTP GET / responded 302 in 32.3383 ms
+2026-05-30 18:42:31.125 +05:30 [INF] HTTP GET /swagger responded 301 in 0.0886 ms
+2026-05-30 18:42:31.131 +05:30 [INF] HTTP GET /swagger/index.html responded 200 in 1.2888 ms
+2026-05-30 18:42:31.178 +05:30 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 11.1545 ms
+2026-05-30 18:42:31.180 +05:30 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 12.3063 ms
+2026-05-30 18:42:31.186 +05:30 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 18.1786 ms
+2026-05-30 18:42:31.442 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 21.5666 ms
+2026-05-30 18:42:31.449 +05:30 [INF] HTTP GET /swagger/favicon-32x32.png responded 200 in 0.2082 ms
+2026-05-30 18:43:13.685 +05:30 [INF] PensionVault API starting on https://localhost:7001
+2026-05-30 18:43:13.781 +05:30 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert.
+2026-05-30 18:43:43.938 +05:30 [INF] HTTP GET / responded 302 in 36.3341 ms
+2026-05-30 18:43:43.950 +05:30 [INF] HTTP GET /swagger responded 301 in 1.1173 ms
+2026-05-30 18:43:44.029 +05:30 [INF] HTTP GET /swagger/index.html responded 200 in 72.5165 ms
+2026-05-30 18:43:44.092 +05:30 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 7.8561 ms
+2026-05-30 18:43:44.102 +05:30 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 9.8827 ms
+2026-05-30 18:43:44.105 +05:30 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 13.7545 ms
+2026-05-30 18:43:44.557 +05:30 [INF] HTTP GET /swagger/favicon-32x32.png responded 200 in 0.2638 ms
+2026-05-30 18:43:44.694 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 175.0920 ms
+2026-05-30 21:22:47.890 +05:30 [INF] PensionVault API starting on https://localhost:7001
+2026-05-30 21:27:23.693 +05:30 [INF] HTTP POST /api/auth/register responded 201 in 1605.6388 ms
+2026-05-30 21:30:22.975 +05:30 [INF] HTTP POST /api/employers responded 201 in 456.1067 ms
+2026-05-30 21:32:31.142 +05:30 [INF] HTTP POST /api/auth/register responded 201 in 738.9419 ms
+2026-05-30 21:35:09.934 +05:30 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2026-05-30 21:35:10.337 +05:30 [INF] HTTP POST /api/members responded 201 in 888.6148 ms
+2026-05-30 21:37:32.307 +05:30 [INF] HTTP POST /api/remittances responded 403 in 61.1795 ms
+2026-05-30 21:39:05.090 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 602.8720 ms
+2026-05-30 21:41:28.891 +05:30 [INF] HTTP POST /api/remittances responded 201 in 413.7230 ms
+2026-05-30 21:42:58.863 +05:30 [INF] HTTP POST /api/remittances/526dd4ad-33e3-4ac6-919e-6de9a405cf0b/reconcile responded 200 in 388.8466 ms
+2026-05-30 21:44:13.168 +05:30 [INF] HTTP GET /api/reports/audit-trail responded 200 in 156.5191 ms
+2026-05-30 21:44:35.172 +05:30 [INF] HTTP GET /api/reports/audit-trail responded 200 in 14.9702 ms
+2026-05-30 21:47:37.114 +05:30 [INF] PensionVault API starting on https://localhost:7001
+2026-05-30 21:48:09.667 +05:30 [INF] HTTP GET /api/reports/audit-trail responded 200 in 591.5493 ms
+2026-05-30 21:50:30.381 +05:30 [INF] HTTP POST /api/auth/register responded 201 in 1667.2314 ms
+2026-05-30 21:51:34.820 +05:30 [INF] HTTP GET /api/reports/audit-trail responded 200 in 80.4244 ms
+2026-05-30 21:54:29.735 +05:30 [INF] HTTP GET /api/members/82135117-1812-4909-a897-b89e9a069f58/fund-accounts responded 200 in 151.3090 ms
+2026-05-30 21:55:37.554 +05:30 [INF] HTTP POST /api/investments/portfolio responded 404 in 1.0913 ms
+2026-05-30 21:56:39.992 +05:30 [INF] HTTP POST /api/portfolios responded 403 in 4.0708 ms
+2026-05-30 21:58:22.880 +05:30 [INF] HTTP POST /api/portfolios responded 201 in 408.8305 ms
+2026-05-30 22:00:20.666 +05:30 [INF] HTTP POST /api/investments/corpus responded 404 in 1.0308 ms
+2026-05-30 22:01:09.605 +05:30 [INF] HTTP POST /api/corpus responded 201 in 121.4711 ms
+2026-05-30 22:05:19.158 +05:30 [INF] HTTP GET /api/members/82135117-1812-4909-a897-b89e9a069f58/fund-accounts responded 200 in 16.4488 ms
+2026-05-30 22:07:34.537 +05:30 [INF] HTTP GET /api/notifications responded 200 in 108.9434 ms
+2026-05-30 22:09:36.455 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 651.8567 ms
+2026-05-30 22:10:53.715 +05:30 [INF] HTTP GET /api/notifications responded 200 in 65.0363 ms
+2026-05-30 22:11:20.333 +05:30 [INF] HTTP GET /api/notifications responded 200 in 61.8743 ms
+2026-05-30 22:13:07.169 +05:30 [INF] HTTP POST /api/claims responded 201 in 518.7743 ms
+2026-05-30 22:15:11.062 +05:30 [ERR] HTTP POST /api/claims/7181f156-1cda-4bb7-8a6c-bb7022fb87cd/disburse responded 500 in 31.7976 ms
+System.InvalidOperationException: Claim must be approved before disbursement.
+   at PensionVault.Application.Services.ClaimService.DisburseClaimAsync(Guid claimId, DisburseClaimRequest request) in C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\Services\ClaimService.cs:line 85
+   at PensionVault.API.Controllers.ClaimsController.Disburse(Guid id, DisburseClaimRequest request) in C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\Controllers\ClaimsController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-05-30 22:15:11.148 +05:30 [ERR] Unhandled exception: Claim must be approved before disbursement.
+System.InvalidOperationException: Claim must be approved before disbursement.
+   at PensionVault.Application.Services.ClaimService.DisburseClaimAsync(Guid claimId, DisburseClaimRequest request) in C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\Services\ClaimService.cs:line 85
+   at PensionVault.API.Controllers.ClaimsController.Disburse(Guid id, DisburseClaimRequest request) in C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\Controllers\ClaimsController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at PensionVault.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\Middleware\ExceptionMiddleware.cs:line 21
+2026-05-30 22:17:07.299 +05:30 [INF] HTTP PUT /api/claims/7181f156-1cda-4bb7-8a6c-bb7022fb87cd/approv responded 404 in 0.7447 ms
+2026-05-30 22:17:41.502 +05:30 [INF] HTTP PUT /api/claims/7181f156-1cda-4bb7-8a6c-bb7022fb87cd/approve responded 200 in 74.0874 ms
+2026-05-30 22:19:06.844 +05:30 [INF] HTTP POST /api/claims/7181f156-1cda-4bb7-8a6c-bb7022fb87cd/disburse responded 200 in 250.9567 ms
+2026-05-30 22:20:37.451 +05:30 [INF] HTTP POST /api/annuities responded 404 in 0.5766 ms
+2026-05-30 22:20:56.205 +05:30 [INF] HTTP POST /api/annuities responded 404 in 0.5032 ms
+2026-05-30 22:21:40.940 +05:30 [INF] HTTP POST /api/annuity responded 201 in 210.2209 ms
+2026-05-30 22:22:51.040 +05:30 [INF] HTTP POST /api/annuity/312c526e-3b5b-4ab3-84b6-2768a7be8f3f/disburse responded 200 in 205.2533 ms

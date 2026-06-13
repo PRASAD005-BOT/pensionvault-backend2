@@ -10,7 +10,7 @@ public enum MemberStatus { Active, Resigned, Retired, Deceased, Transferred }
 public enum FundAccountStatus { Active, Settled, Frozen }
 public enum RemittanceStatus { Received, Reconciled, Shortfall, Default }
 public enum ContributionStatus { Posted, Reversed, Pending }
-public enum EntryType { ContributionCredit, InterestCredit, PartialWithdrawal, TransferIn, TransferOut, ClaimDebit }
+public enum EntryType { ContributionCredit, InterestCredit, PartialWithdrawal, TransferIn, TransferOut, ClaimDebit, AnnuityDebit }
 public enum LedgerEntryStatus { Posted, Reversed }
 public enum InterestCreditStatus { Computed, Credited }
 public enum ClaimType { Retirement, Resignation, PartialWithdrawal, DeathClaim, Disability, Marriage, Housing }

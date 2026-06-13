@@ -20,8 +20,9 @@ public class NotificationsController : ControllerBase
     public async Task<IActionResult> GetMyNotifications()
     {
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var notifications = await _context.Notifications
-            .Where(n => n.UserId == userId)
+        var query = _context.Notifications.AsQueryable().Where(n => n.UserId == userId);
+
+        var notifications = await query
             .OrderByDescending(n => n.CreatedDate)
             .Select(n => new
             {
@@ -38,10 +39,26 @@ public class NotificationsController : ControllerBase
     public async Task<IActionResult> MarkRead(Guid id)
     {
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var notification = await _context.Notifications
-            .FirstOrDefaultAsync(n => n.NotificationId == id && n.UserId == userId);
+        var query = _context.Notifications.AsQueryable().Where(n => n.UserId == userId);
+
+        var notification = await query.FirstOrDefaultAsync(n => n.NotificationId == id);
         if (notification == null) return NotFound();
         notification.Status = NotificationStatus.Read;
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPut("read-all")]
+    public async Task<IActionResult> MarkAllRead()
+    {
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var query = _context.Notifications.AsQueryable().Where(n => n.UserId == userId);
+
+        var unreadNotifs = await query.Where(n => n.Status == NotificationStatus.Unread).ToListAsync();
+        foreach (var n in unreadNotifs)
+        {
+            n.Status = NotificationStatus.Read;
+        }
         await _context.SaveChangesAsync();
         return NoContent();
     }
@@ -50,8 +67,9 @@ public class NotificationsController : ControllerBase
     public async Task<IActionResult> Dismiss(Guid id)
     {
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var notification = await _context.Notifications
-            .FirstOrDefaultAsync(n => n.NotificationId == id && n.UserId == userId);
+        var query = _context.Notifications.AsQueryable().Where(n => n.UserId == userId);
+
+        var notification = await query.FirstOrDefaultAsync(n => n.NotificationId == id);
         if (notification == null) return NotFound();
         notification.Status = NotificationStatus.Dismissed;
         await _context.SaveChangesAsync();

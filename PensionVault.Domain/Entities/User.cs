@@ -11,6 +11,7 @@ public class User
     public string? Phone { get; set; }
     public string PasswordHash { get; set; } = string.Empty;
     public Guid? OrganisationId { get; set; }
+    public string? EmployeeId { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Active;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string? RefreshToken { get; set; }

@@ -14,6 +14,11 @@ public class AnnuityController : ControllerBase
     private readonly IAnnuityService _annuityService;
     public AnnuityController(IAnnuityService annuityService) => _annuityService = annuityService;
 
+    [HttpGet]
+    [Authorize(Roles = "FundAdmin,Admin,Compliance")]
+    public async Task<IActionResult> GetAll()
+        => Ok(await _annuityService.GetAllAnnuitiesAsync());
+
     [HttpPost]
     [Authorize(Roles = "FundAdmin,Admin")]
     public async Task<IActionResult> Create([FromBody] CreateAnnuityRequest request)

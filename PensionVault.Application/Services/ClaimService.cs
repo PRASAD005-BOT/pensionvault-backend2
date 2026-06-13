@@ -44,6 +44,16 @@ public class ClaimService : IClaimService
             Status = ClaimStatus.Submitted
         };
         _context.BenefitClaims.Add(claim);
+
+        _context.Notifications.Add(new Notification
+        {
+            UserId = member.UserId,
+            Message = $"Your benefit claim of type {claim.ClaimType} for ₹{claim.EligibleAmount:N2} has been submitted successfully and is under review.",
+            Category = NotificationCategory.Claim,
+            Status = NotificationStatus.Unread,
+            CreatedDate = DateTime.UtcNow
+        });
+
         await _context.SaveChangesAsync();
         return await GetClaimAsync(claim.ClaimId);
     }
@@ -79,7 +89,9 @@ public class ClaimService : IClaimService
 
     public async Task<DisbursementResponse> DisburseClaimAsync(Guid claimId, DisburseClaimRequest request)
     {
-        var claim = await _context.BenefitClaims.FindAsync(claimId)
+        var claim = await _context.BenefitClaims
+            .Include(c => c.Member)
+            .FirstOrDefaultAsync(c => c.ClaimId == claimId)
             ?? throw new KeyNotFoundException("Claim not found.");
         if (claim.Status != ClaimStatus.Approved)
             throw new InvalidOperationException("Claim must be approved before disbursement.");
@@ -115,6 +127,18 @@ public class ClaimService : IClaimService
             });
         }
 
+        if (claim.Member != null)
+        {
+            _context.Notifications.Add(new Notification
+            {
+                UserId = claim.Member.UserId,
+                Message = $"Your claim payout of ₹{disbursement.NetAmount:N2} has been disbursed to bank account {disbursement.BankAccountRef}.",
+                Category = NotificationCategory.Claim,
+                Status = NotificationStatus.Unread,
+                CreatedDate = DateTime.UtcNow
+            });
+        }
+
         await _context.SaveChangesAsync();
         return new DisbursementResponse(
             disbursement.DisbursementId, disbursement.ClaimId,
@@ -125,10 +149,33 @@ public class ClaimService : IClaimService
 
     private async Task<ClaimResponse> UpdateStatusAsync(Guid claimId, ClaimStatus status, Guid processedById)
     {
-        var claim = await _context.BenefitClaims.FindAsync(claimId)
+        var claim = await _context.BenefitClaims
+            .Include(c => c.Member)
+            .FirstOrDefaultAsync(c => c.ClaimId == claimId)
             ?? throw new KeyNotFoundException("Claim not found.");
         claim.Status = status;
         claim.ProcessedById = processedById;
+
+        if (claim.Member != null)
+        {
+            string message = status switch
+            {
+                ClaimStatus.UnderReview => $"Your claim of type {claim.ClaimType} is now under review.",
+                ClaimStatus.Approved => $"Congratulations! Your claim of type {claim.ClaimType} for ₹{claim.EligibleAmount:N2} has been APPROVED.",
+                ClaimStatus.Rejected => $"Your claim of type {claim.ClaimType} has been rejected.",
+                _ => $"Your claim of type {claim.ClaimType} status has been updated to {status}."
+            };
+
+            _context.Notifications.Add(new Notification
+            {
+                UserId = claim.Member.UserId,
+                Message = message,
+                Category = NotificationCategory.Claim,
+                Status = NotificationStatus.Unread,
+                CreatedDate = DateTime.UtcNow
+            });
+        }
+
         await _context.SaveChangesAsync();
         return await GetClaimAsync(claimId);
     }

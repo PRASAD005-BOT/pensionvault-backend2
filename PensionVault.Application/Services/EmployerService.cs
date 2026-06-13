@@ -9,6 +9,7 @@ public interface IEmployerService
 {
     Task<IEnumerable<EmployerResponse>> GetAllAsync();
     Task<EmployerResponse> GetByIdAsync(Guid id);
+    Task<EmployerResponse> GetByUserIdAsync(Guid userId);
     Task<EmployerResponse> CreateAsync(CreateEmployerRequest request);
     Task<EmployerResponse> UpdateAsync(Guid id, UpdateEmployerRequest request);
 }
@@ -25,6 +26,19 @@ public class EmployerService : IEmployerService
     {
         var e = await _context.Employers.FindAsync(id)
             ?? throw new KeyNotFoundException("Employer not found.");
+        return ToResponse(e);
+    }
+
+    public async Task<EmployerResponse> GetByUserIdAsync(Guid userId)
+    {
+        var user = await _context.Users.FindAsync(userId)
+            ?? throw new KeyNotFoundException("User not found.");
+
+        if (user.OrganisationId == null)
+            throw new KeyNotFoundException("User is not associated with an organisation.");
+
+        var e = await _context.Employers.FindAsync(user.OrganisationId)
+            ?? throw new KeyNotFoundException("No employer profile found.");
         return ToResponse(e);
     }
 

@@ -11,6 +11,7 @@ public interface IAnnuityService
     Task<AnnuityResponse> GetAnnuityAsync(Guid annuityId);
     Task<IEnumerable<PensionDisbursementResponse>> GetDisbursementsAsync(Guid annuityId);
     Task<PensionDisbursementResponse> ProcessDisbursementAsync(ProcessDisbursementRequest request);
+    Task<IEnumerable<AnnuityResponse>> GetAllAnnuitiesAsync();
 }
 
 public class AnnuityService : IAnnuityService
@@ -49,6 +50,19 @@ public class AnnuityService : IAnnuityService
             a.AnnuityStartDate, a.NomineeDetails, a.Status);
     }
 
+    public async Task<IEnumerable<AnnuityResponse>> GetAllAnnuitiesAsync()
+    {
+        var annuities = await _context.AnnuityPlans
+            .Include(a => a.Member)
+            .OrderByDescending(a => a.AnnuityStartDate)
+            .ToListAsync();
+            
+        return annuities.Select(a => new AnnuityResponse(
+            a.AnnuityId, a.MemberId, a.Member?.Name ?? "",
+            a.PlanType, a.PurchaseValue, a.MonthlyPension,
+            a.AnnuityStartDate, a.NomineeDetails, a.Status));
+    }
+
     public async Task<IEnumerable<PensionDisbursementResponse>> GetDisbursementsAsync(Guid annuityId)
     {
         return await _context.MonthlyPensionDisbursements
@@ -80,6 +94,26 @@ public class AnnuityService : IAnnuityService
             Status = PensionDisbursementStatus.Disbursed
         };
         _context.MonthlyPensionDisbursements.Add(disbursement);
+
+        // Deduct from fund account and create ledger entry
+        var account = await _context.FundAccounts
+            .FirstOrDefaultAsync(a => a.MemberId == annuity.MemberId && a.Status == FundAccountStatus.Active);
+        
+        if (account != null)
+        {
+            account.TotalBalance -= annuity.MonthlyPension;
+            
+            _context.LedgerEntries.Add(new LedgerEntry
+            {
+                AccountId = account.AccountId,
+                EntryType = EntryType.AnnuityDebit,
+                Amount = annuity.MonthlyPension,
+                BalanceAfter = account.TotalBalance,
+                ReferenceId = disbursement.DisbursementId.ToString(),
+                Status = LedgerEntryStatus.Posted
+            });
+        }
+
         await _context.SaveChangesAsync();
 
         var d = await _context.MonthlyPensionDisbursements

@@ -44,6 +44,7 @@ public record CorpusResponse(
     Guid SchemeId,
     string SchemeName,
     DateTime RecordDate,
+    decimal OpeningCorpus,
     decimal TotalContributions,
     decimal TotalWithdrawals,
     decimal InvestmentIncome,

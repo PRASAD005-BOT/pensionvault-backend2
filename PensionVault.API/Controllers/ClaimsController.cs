@@ -13,7 +13,12 @@ namespace PensionVault.API.Controllers;
 public class ClaimsController : ControllerBase
 {
     private readonly IClaimService _claimService;
-    public ClaimsController(IClaimService claimService) => _claimService = claimService;
+    private readonly IMemberService _memberService;
+    public ClaimsController(IClaimService claimService, IMemberService memberService) 
+    {
+        _claimService = claimService;
+        _memberService = memberService;
+    }
 
     [HttpPost]
     [Authorize(Roles = "Member,FundAdmin")]
@@ -24,14 +29,29 @@ public class ClaimsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "FundAdmin,Admin,Compliance")]
-    public async Task<IActionResult> GetAll() => Ok(await _claimService.GetAllClaimsAsync());
+    [Authorize(Roles = "Member,FundAdmin,Admin,Compliance")]
+    public async Task<IActionResult> GetAll()
+    {
+        var allClaims = await _claimService.GetAllClaimsAsync();
+        if (User.IsInRole("Member"))
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Guid.TryParse(userIdString, out var userId))
+            {
+                try {
+                    var member = await _memberService.GetByUserIdAsync(userId);
+                    return Ok(allClaims.Where(c => c.MemberId == member.MemberId));
+                } catch { return Ok(new List<ClaimResponse>()); }
+            }
+        }
+        return Ok(allClaims);
+    }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id) => Ok(await _claimService.GetClaimAsync(id));
 
     [HttpPut("{id:guid}/review")]
-    [Authorize(Roles = "FundAdmin")]
+    [Authorize(Roles = "FundAdmin,Admin")]
     public async Task<IActionResult> Review(Guid id)
     {
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);

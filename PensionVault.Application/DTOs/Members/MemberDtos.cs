@@ -24,6 +24,19 @@ public record UpdateMemberRequest(
     MemberStatus Status
 );
 
+public record SelfEnrollMemberRequest(
+    string NationalIdRef,
+    DateTime DateOfBirth,
+    string? Gender,
+    Guid EmployerId,
+    string? NomineeDetails
+);
+
+public record ApproveMemberRequest(
+    string MembershipNumber,
+    Guid EmployerId
+);
+
 public record MemberResponse(
     Guid MemberId,
     string MembershipNumber,

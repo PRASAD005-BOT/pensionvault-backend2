@@ -9,3 +9,4 @@ C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\refint\PensionVault.Domain.dll
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.pdb
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\ref\PensionVault.Domain.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Domain\obj\Debug\net8.0\PensionVault.Domain.sourcelink.json

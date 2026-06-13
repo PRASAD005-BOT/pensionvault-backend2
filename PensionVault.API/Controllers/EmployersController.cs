@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PensionVault.Application.DTOs.Employers;
@@ -21,12 +22,21 @@ public class EmployersController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "FundAdmin,Admin,Compliance")]
+    [Authorize(Roles = "FundAdmin,Admin,Compliance,Employer")]
     public async Task<IActionResult> GetAll() => Ok(await _employerService.GetAllAsync());
 
     [HttpGet("{id:guid}")]
     [Authorize(Roles = "Employer,FundAdmin,Admin,Compliance")]
     public async Task<IActionResult> GetById(Guid id) => Ok(await _employerService.GetByIdAsync(id));
+
+    [HttpGet("me")]
+    [Authorize(Roles = "Employer,FundAdmin,Admin")]
+    public async Task<IActionResult> GetMyEmployer()
+    {
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(userIdString, out var userId)) return Unauthorized();
+        return Ok(await _employerService.GetByUserIdAsync(userId));
+    }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]

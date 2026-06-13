@@ -13,3 +13,4 @@ C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\obj\Debug
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\obj\Debug\net8.0\refint\PensionVault.Application.dll
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\obj\Debug\net8.0\PensionVault.Application.pdb
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\obj\Debug\net8.0\ref\PensionVault.Application.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Application\obj\Debug\net8.0\PensionVault.Application.sourcelink.json

@@ -8,6 +8,7 @@ namespace PensionVault.Application.Services;
 public interface ILedgerService
 {
     Task<IEnumerable<LedgerEntryResponse>> GetAccountLedgerAsync(Guid accountId);
+    Task<IEnumerable<LedgerEntryResponse>> GetAllLedgerEntriesAsync();
     Task<InterestCreditResponse> CreditInterestAsync(CreditInterestRequest request);
     Task<IEnumerable<InterestCreditResponse>> GetInterestRecordsAsync(Guid accountId);
 }
@@ -21,6 +22,16 @@ public class LedgerService : ILedgerService
     {
         return await _context.LedgerEntries
             .Where(e => e.AccountId == accountId)
+            .OrderByDescending(e => e.EntryDate)
+            .Select(e => new LedgerEntryResponse(
+                e.EntryId, e.AccountId, e.EntryType, e.Amount,
+                e.BalanceAfter, e.EntryDate, e.ReferenceId, e.Status))
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<LedgerEntryResponse>> GetAllLedgerEntriesAsync()
+    {
+        return await _context.LedgerEntries
             .OrderByDescending(e => e.EntryDate)
             .Select(e => new LedgerEntryResponse(
                 e.EntryId, e.AccountId, e.EntryType, e.Amount,

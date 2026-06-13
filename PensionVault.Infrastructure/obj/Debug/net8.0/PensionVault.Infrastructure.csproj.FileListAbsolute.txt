@@ -17,3 +17,4 @@ C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Infrastructure\obj\De
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Infrastructure\obj\Debug\net8.0\PensionVault.Infrastructure.pdb
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Infrastructure\obj\Debug\net8.0\PensionVault.Infrastructure.genruntimeconfig.cache
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Infrastructure\obj\Debug\net8.0\ref\PensionVault.Infrastructure.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.Infrastructure\obj\Debug\net8.0\PensionVault.Infrastructure.sourcelink.json
