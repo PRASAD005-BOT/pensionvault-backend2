@@ -32,7 +32,7 @@ public class RemittancesController : ControllerBase
 
     /// <summary>Submit a contribution remittance for an employer</summary>
     [HttpPost]
-    [Authorize(Roles = "Employer,FundAdmin")]
+    [Authorize(Roles = "Employer,FundAdmin,Admin")]
     public async Task<IActionResult> Create([FromBody] CreateRemittanceRequest request)
     {
         if (User.IsInRole("Employer"))
