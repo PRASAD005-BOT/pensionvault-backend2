@@ -20,7 +20,8 @@ public record AuthResponse(
     string Token,
     string RefreshToken,
     DateTime TokenExpiry,
-    string? EmployeeId
+    string? EmployeeId,
+    string? ProfileImageUrl
 );
 
 public record RefreshTokenRequest(string RefreshToken);

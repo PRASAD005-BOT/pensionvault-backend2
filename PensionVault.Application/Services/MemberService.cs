@@ -39,7 +39,7 @@ public class MemberService : IMemberService
 
     public async Task<MemberResponse> GetByIdAsync(Guid id)
     {
-        var member = await _context.Members.Include(m => m.Employer)
+        var member = await _context.Members.Include(m => m.Employer).Include(m => m.User)
             .FirstOrDefaultAsync(m => m.MemberId == id)
             ?? throw new KeyNotFoundException($"Member {id} not found.");
         return ToResponse(member);
@@ -47,7 +47,7 @@ public class MemberService : IMemberService
 
     public async Task<MemberResponse> GetByUserIdAsync(Guid userId)
     {
-        var member = await _context.Members.Include(m => m.Employer)
+        var member = await _context.Members.Include(m => m.Employer).Include(m => m.User)
             .FirstOrDefaultAsync(m => m.UserId == userId)
             ?? throw new KeyNotFoundException("Member profile not found for the current user.");
         return ToResponse(member);
@@ -270,5 +270,5 @@ public class MemberService : IMemberService
         m.MemberId, m.MembershipNumber, m.Name, m.DateOfBirth,
         m.Gender, m.NationalIdRef, m.EmployerId,
         m.Employer?.CompanyName ?? "", m.JoiningDate,
-        m.DateOfRetirement, m.NomineeDetails, m.Status);
+        m.DateOfRetirement, m.NomineeDetails, m.Status, m.User?.ProfileImageUrl);
 }

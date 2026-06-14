@@ -1,11 +1,77 @@
 {
   "Version": 1,
-  "Hash": "T9nX079AeF9JZTk4BaUXybeCaNX2HWxM20vNeHGWz3c=",
+  "Hash": "Aklz8hAKG9bNxlVkk8iFAwWYaQqWKzCZl0fzZMaPHzI=",
   "Source": "PensionVault.API",
   "BasePath": "_content/PensionVault.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "PensionVault.API\\wwwroot",
+      "Source": "PensionVault.API",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_6ec1ed75-7340-4996-a320-197927326e66.png",
+      "SourceId": "PensionVault.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "RelativePath": "uploads/profiles/6daaa81b-6775-488a-a947-7e7ea760b52d_6ec1ed75-7340-4996-a320-197927326e66.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_6ec1ed75-7340-4996-a320-197927326e66.png"
+    },
+    {
+      "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_8f4274d9-92ae-43b9-86ab-7e33e1a63fd1.png",
+      "SourceId": "PensionVault.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "RelativePath": "uploads/profiles/6daaa81b-6775-488a-a947-7e7ea760b52d_8f4274d9-92ae-43b9-86ab-7e33e1a63fd1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_8f4274d9-92ae-43b9-86ab-7e33e1a63fd1.png"
+    },
+    {
+      "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_f0f8c0e5-5377-4b6a-9f45-4cbabc86cff3.png",
+      "SourceId": "PensionVault.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "RelativePath": "uploads/profiles/6daaa81b-6775-488a-a947-7e7ea760b52d_f0f8c0e5-5377-4b6a-9f45-4cbabc86cff3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_f0f8c0e5-5377-4b6a-9f45-4cbabc86cff3.png"
+    }
+  ]
 }

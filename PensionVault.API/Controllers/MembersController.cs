@@ -82,10 +82,18 @@ public class MembersController : ControllerBase
 
     /// <summary>Update member details</summary>
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = "Employer,FundAdmin,Admin")]
+    [Authorize(Roles = "Member,Employer,FundAdmin,Admin")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateMemberRequest request)
     {
-        if (User.IsInRole("Employer"))
+        if (User.IsInRole("Member"))
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!Guid.TryParse(userIdString, out var userId)) return Unauthorized();
+            var member = await _memberService.GetByUserIdAsync(userId);
+            if (member.MemberId != id) return Forbid();
+            request = request with { Status = member.Status };
+        }
+        else if (User.IsInRole("Employer"))
         {
             var member = await _memberService.GetByIdAsync(id);
             var orgClaim = User.FindFirst("OrganisationId");

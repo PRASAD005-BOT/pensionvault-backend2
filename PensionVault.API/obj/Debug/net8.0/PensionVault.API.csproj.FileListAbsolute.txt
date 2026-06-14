@@ -129,3 +129,4 @@ C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\obj\Debug\net8.0\
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\obj\Debug\net8.0\ref\PensionVault.API.dll
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\bin\Debug\net8.0\Npgsql.dll
 C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\vadla\Downloads\Pensionvault backend\PensionVault.API\bin\Debug\net8.0\PensionVault.API.staticwebassets.runtime.json

@@ -144,6 +144,6 @@ public class AuthService : IAuthService
         await _context.SaveChangesAsync();
 
         return new AuthResponse(user.UserId, user.Name, user.Email,
-            user.Role.ToString(), tokenStr, refreshToken, expiry, user.EmployeeId);
+            user.Role.ToString(), tokenStr, refreshToken, expiry, user.EmployeeId, user.ProfileImageUrl);
     }
 }

@@ -49,5 +49,6 @@ public record MemberResponse(
     DateTime JoiningDate,
     DateTime? DateOfRetirement,
     string? NomineeDetails,
-    MemberStatus Status
+    MemberStatus Status,
+    string? ProfileImageUrl
 );

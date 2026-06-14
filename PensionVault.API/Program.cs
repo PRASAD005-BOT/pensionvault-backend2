@@ -116,6 +116,13 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+// Ensure wwwroot exists so UseStaticFiles works even if it was empty
+var wwwrootPath = Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+if (!Directory.Exists(wwwrootPath))
+{
+    Directory.CreateDirectory(wwwrootPath);
+}
+
 var app = builder.Build();
 
 // ── Apply Migrations & Seed ────────────────────────────────────────────────
@@ -136,6 +143,13 @@ using (var scope = app.Services.CreateScope())
 // ── Middleware Pipeline ───────────────────────────────────────────────────
 app.UseSerilogRequestLogging();
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    RequestPath = ""
+});
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
