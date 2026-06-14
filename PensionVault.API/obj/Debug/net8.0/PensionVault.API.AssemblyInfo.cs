@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PensionVault.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b907725cdf115f897551a3abfe5b33fde31b553c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31957561f849a379f6010cafd966b41ec67f19e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("PensionVault.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PensionVault.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

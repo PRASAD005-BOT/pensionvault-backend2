@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Aklz8hAKG9bNxlVkk8iFAwWYaQqWKzCZl0fzZMaPHzI=",
+  "Hash": "9IsCHUi6pBR7gWXwKhJvULlDK572qlQi7Xy1hGleHKo=",
   "Source": "PensionVault.API",
   "BasePath": "_content/PensionVault.API",
   "Mode": "Default",
@@ -16,6 +16,44 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\3fc3a404-4385-4088-a5a5-8bf9952fc7ff_7183752a-53b5-4215-ba26-23001eed5eee.png",
+      "SourceId": "PensionVault.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "RelativePath": "uploads/profiles/3fc3a404-4385-4088-a5a5-8bf9952fc7ff_7183752a-53b5-4215-ba26-23001eed5eee.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\profiles\\3fc3a404-4385-4088-a5a5-8bf9952fc7ff_7183752a-53b5-4215-ba26-23001eed5eee.png"
+    },
+    {
+      "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\3fc3a404-4385-4088-a5a5-8bf9952fc7ff_9a37d1dd-772a-450f-9ca7-825ac4e6066a.ico",
+      "SourceId": "PensionVault.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\",
+      "BasePath": "_content/PensionVault.API",
+      "RelativePath": "uploads/profiles/3fc3a404-4385-4088-a5a5-8bf9952fc7ff_9a37d1dd-772a-450f-9ca7-825ac4e6066a.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\profiles\\3fc3a404-4385-4088-a5a5-8bf9952fc7ff_9a37d1dd-772a-450f-9ca7-825ac4e6066a.ico"
+    },
     {
       "Identity": "C:\\Users\\vadla\\Downloads\\Pensionvault backend\\PensionVault.API\\wwwroot\\uploads\\profiles\\6daaa81b-6775-488a-a947-7e7ea760b52d_6ec1ed75-7340-4996-a320-197927326e66.png",
       "SourceId": "PensionVault.API",
